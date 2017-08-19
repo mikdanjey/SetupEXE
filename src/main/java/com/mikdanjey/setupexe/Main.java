@@ -1,4 +1,4 @@
-package main.com.mikdanjey.setupexe;
+package com.mikdanjey.setupexe;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
