@@ -1,9 +1,8 @@
 package com.mikdanjey.setupexe;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
@@ -27,7 +26,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Length(max = 2)
+    @NotBlank
     @Column(name = "first_name", nullable = false, length = 1)
     public String getFirstName() {
         return firstName;
@@ -38,6 +37,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @NotBlank
     @Column(name = "last_name", nullable = false, length = 50)
     public String getLastName() {
         return lastName;
@@ -49,6 +49,7 @@ public class UsersEntity {
 
     @Basic
     @Email
+    @NotBlank
     @Column(name = "email", nullable = false, length = 50, unique = true)
     public String getEmail() {
         return email;

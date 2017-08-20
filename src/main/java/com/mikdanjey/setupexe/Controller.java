@@ -47,7 +47,12 @@ public class Controller implements Initializable {
 
     @FXML
     private void submit_action() {
-        insertUser(first_name_textbox.getText(), last_name_textbox.getText(), email_textbox.getText());
+
+        UsersEntity usersEntity = new UsersEntity();
+        usersEntity.setFirstName(first_name_textbox.getText());
+        usersEntity.setLastName(last_name_textbox.getText());
+        usersEntity.setEmail(email_textbox.getText());
+        UsersModel.create(usersEntity);
 
         List<UsersEntity> users = listUsers();
         for (UsersEntity u : users) {
@@ -75,31 +80,6 @@ public class Controller implements Initializable {
         } finally {
             session.close();
         }
-    }
-
-    private int insertUser(String fname, String lname, String email) {
-        Session session = Main.getSession();
-        Transaction transaction = null;
-        int userIdSaved = 0;
-        try {
-            transaction = session.beginTransaction();
-            UsersEntity usersEntity = new UsersEntity();
-            usersEntity.setFirstName(fname);
-            usersEntity.setLastName(lname);
-            usersEntity.setEmail(email);
-
-            System.out.println(UsersModel.validate(usersEntity));
-
-            userIdSaved = (int) session.save(usersEntity);
-            transaction.commit();
-        } catch (HibernateException ex) {
-            if (transaction != null)
-                transaction.rollback();
-            ex.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return userIdSaved;
     }
 
     private List listUsers() {
