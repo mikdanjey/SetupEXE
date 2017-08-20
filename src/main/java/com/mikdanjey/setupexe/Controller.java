@@ -4,7 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -15,11 +16,29 @@ public class Controller implements Initializable {
 
     @FXML
     private Label time_label;
+
+    @FXML
+    private TextField first_name_textbox;
+
+    @FXML
+    private TextField last_name_textbox;
+
+    @FXML
+    private TextField email_textbox;
+
+    @FXML
+    private Button submit_button;
+
     private int i = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         unlimitedrunable();
+    }
+
+    @FXML
+    private void submit_action(){
+
     }
 
     private void unlimitedrunable() {
