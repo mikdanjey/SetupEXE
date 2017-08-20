@@ -49,14 +49,14 @@ public class Controller implements Initializable {
     private void submit_action() {
         insertUser(first_name_textbox.getText(), last_name_textbox.getText(), email_textbox.getText());
 
-        List<UsersEntity> users = listUsers();
-        for (UsersEntity u : users) {
-            System.out.print(u.getId() + " ");
-            System.out.print(u.getFirstName() + " ");
-            System.out.print(u.getLastName() + " ");
-            System.out.print(u.getEmail() + " ");
-            System.out.println();
-        }
+//        List<UsersEntity> users = listUsers();
+//        for (UsersEntity u : users) {
+//            System.out.print(u.getId() + " ");
+//            System.out.print(u.getFirstName() + " ");
+//            System.out.print(u.getLastName() + " ");
+//            System.out.print(u.getEmail() + " ");
+//            System.out.println();
+//        }
     }
 
     private void listAll() {
@@ -79,17 +79,20 @@ public class Controller implements Initializable {
 
     private int insertUser(String fname, String lname, String email) {
         Session session = Main.getSession();
-        Transaction tx = null;
+        Transaction transaction = null;
         int userIdSaved = 0;
         try {
-            tx = session.beginTransaction();
-            UsersEntity u = new UsersEntity(fname, lname, email);
-            userIdSaved = (int) session.save(u);
-            tx.commit();
+            transaction = session.beginTransaction();
+//            UsersEntity usersEntity = new UsersEntity();
+//            usersEntity.setFirstName(fname);
+//            usersEntity.setLastName(lname);
+//            usersEntity.setEmail(email);
+//            userIdSaved = (int) session.save(usersEntity);
+            transaction.commit();
 
         } catch (HibernateException ex) {
-            if (tx != null)
-                tx.rollback();
+            if (transaction != null)
+                transaction.rollback();
             ex.printStackTrace();
         } finally {
             session.close();
@@ -105,7 +108,7 @@ public class Controller implements Initializable {
         List users = new ArrayList();
         try {
             tx = session.beginTransaction();
-            users = session.createQuery("From UsersEntity").list();
+//            users = session.createQuery("From UsersEntity").list();
             tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
