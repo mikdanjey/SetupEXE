@@ -6,6 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import org.hibernate.Metamodel;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import javax.persistence.metamodel.EntityType;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -39,6 +44,21 @@ public class Controller implements Initializable {
     @FXML
     private void submit_action(){
 
+        final Session session = Main.getSession();
+        try {
+            System.out.println("querying all the managed entities...");
+            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
+            for (EntityType<?> entityType : metamodel.getEntities()) {
+                final String entityName = entityType.getName();
+                final Query query = session.createQuery("from " + entityName);
+                System.out.println("executing: " + query.getQueryString());
+                for (Object o : query.list()) {
+                    System.out.println("  " + o);
+                }
+            }
+        } finally {
+            session.close();
+        }
     }
 
     private void unlimitedrunable() {

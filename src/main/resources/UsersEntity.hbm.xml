@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.mikdanjey.setupexe.UsersEntity" table="users" schema="mikdatds_test">
+    <class name="com.mikdanjey.setupexe.UsersEntity" table="users">
         <id name="id">
             <column name="id" sql-type="int(10)"/>
         </id>
