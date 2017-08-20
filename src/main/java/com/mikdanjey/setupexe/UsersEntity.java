@@ -23,7 +23,7 @@ public class UsersEntity {
     }
 
     @Id
-    @Column(name = "id", nullable = true)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -63,7 +63,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "created_at", nullable = true)
+    @Column(name = "created_at", nullable = false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -73,7 +73,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "updated_at", nullable = true)
+    @Column(name = "updated_at", nullable = false)
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }

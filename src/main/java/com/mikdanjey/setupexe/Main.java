@@ -29,11 +29,13 @@ public class Main extends Application {
     private static final String PropertiesSQLDatabase = "Database";
 
     private static final String connection_driver_class_key = "hibernate.connection.driver_class";
+    private static final String connection_dialect_key = "org.hibernate.dialect.MySQL5Dialect";
     private static final String connection_url_key = "hibernate.connection.url";
     private static final String connection_username_key = "hibernate.connection.username";
     private static final String connection_password_key = "hibernate.connection.password";
 
     private static String connection_driver_class_value = "com.mysql.cj.jdbc.Driver";
+    private static String connection_dialect_value = "org.hibernate.dialect.MySQL5Dialect";
 
     private static String connection_host;
     private static String connection_post;
@@ -55,6 +57,7 @@ public class Main extends Application {
             configuration.configure("/hibernate.cfg.xml");
 
             configuration.getProperties().setProperty(connection_driver_class_key, connection_driver_class_value);
+            configuration.getProperties().setProperty(connection_dialect_key, connection_dialect_value);
             configuration.getProperties().setProperty(connection_url_key, connection_url_value);
             configuration.getProperties().setProperty(connection_username_key, connection_username_value);
             configuration.getProperties().setProperty(connection_password_key, connection_password_value);

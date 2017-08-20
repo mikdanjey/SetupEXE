@@ -5,17 +5,8 @@
 
 <hibernate-configuration>
     <session-factory>
-
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-
-        <property name="hibernate.show_sql">false</property>
-        <property name="hibernate.use_sql_comments">false</property>
-
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
-
-        <mapping resource="UsersEntity.hbm.xml"/>
         <mapping class="com.mikdanjey.setupexe.UsersEntity"/>
+        <mapping resource="com/mikdanjey/setupexe/UsersEntity.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>
