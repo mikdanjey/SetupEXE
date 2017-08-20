@@ -53,7 +53,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 50)
+    @Column(name = "email", nullable = false, length = 50, unique = true)
     public String getEmail() {
         return email;
     }
