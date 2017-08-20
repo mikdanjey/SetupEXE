@@ -9,7 +9,7 @@
             <column name="id" sql-type="int(10)"/>
         </id>
         <property name="firstName">
-            <column name="first_name" sql-type="varchar(50)" length="50"/>
+            <column name="first_name" sql-type="varchar(50)" length="1"/>
         </property>
         <property name="lastName">
             <column name="last_name" sql-type="varchar(50)" length="50"/>

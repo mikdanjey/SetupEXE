@@ -1,10 +1,13 @@
 package com.mikdanjey.setupexe;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "users", schema = "mikdatds_test", catalog = "")
+@Table(name = "users")
 public class UsersEntity {
     private int id;
     private String firstName;
@@ -24,7 +27,8 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Length(max = 2)
+    @Column(name = "first_name", nullable = false, length = 1)
     public String getFirstName() {
         return firstName;
     }
@@ -44,6 +48,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @Email
     @Column(name = "email", nullable = false, length = 50, unique = true)
     public String getEmail() {
         return email;
