@@ -5,6 +5,7 @@
 
 <hibernate-configuration>
     <session-factory>
-
+        <mapping resource="UsersEntity.hbm.xml"/>
+        <mapping class="com.mikdanjey.setupexe.UsersEntity"/>
     </session-factory>
 </hibernate-configuration>
