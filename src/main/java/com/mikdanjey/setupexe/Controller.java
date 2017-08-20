@@ -19,7 +19,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        time_label.setText("OK");
         unlimitedrunable();
     }
 
@@ -32,7 +31,7 @@ public class Controller implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                time_label.setText(String.valueOf(i++));
+                                time_label.setText("Thread: " + String.valueOf(i++));
                             }
                         });
                     }
