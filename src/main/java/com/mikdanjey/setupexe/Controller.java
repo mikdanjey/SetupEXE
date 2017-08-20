@@ -87,9 +87,11 @@ public class Controller implements Initializable {
             usersEntity.setFirstName(fname);
             usersEntity.setLastName(lname);
             usersEntity.setEmail(email);
+
+            System.out.println(UsersModel.validate(usersEntity));
+
             userIdSaved = (int) session.save(usersEntity);
             transaction.commit();
-
         } catch (HibernateException ex) {
             if (transaction != null)
                 transaction.rollback();
