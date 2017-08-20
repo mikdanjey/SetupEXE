@@ -14,16 +14,16 @@ public class UsersEntity {
     private Timestamp updatedAt;
 
     public UsersEntity(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
     }
 
     public UsersEntity() {
     }
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = true)
     public int getId() {
         return id;
     }

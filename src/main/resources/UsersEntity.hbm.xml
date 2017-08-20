@@ -18,10 +18,10 @@
             <column name="email" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="createdAt">
-            <column name="created_at" sql-type="timestamp" not-null="true"/>
+            <column name="created_at" sql-type="timestamp"/>
         </property>
         <property name="updatedAt">
-            <column name="updated_at" sql-type="timestamp" not-null="true"/>
+            <column name="updated_at" sql-type="timestamp"/>
         </property>
     </class>
 </hibernate-mapping>

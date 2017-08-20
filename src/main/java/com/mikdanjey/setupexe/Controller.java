@@ -14,6 +14,8 @@ import org.hibernate.query.Query;
 
 import javax.persistence.metamodel.EntityType;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,6 +48,15 @@ public class Controller implements Initializable {
     @FXML
     private void submit_action() {
         insertUser(first_name_textbox.getText(), last_name_textbox.getText(), email_textbox.getText());
+
+        List<UsersEntity> users = listUsers();
+        for (UsersEntity u : users) {
+            System.out.print(u.getId() + " ");
+            System.out.print(u.getFirstName() + " ");
+            System.out.print(u.getLastName() + " ");
+            System.out.print(u.getEmail() + " ");
+            System.out.println();
+        }
     }
 
     private void listAll() {
@@ -67,7 +78,7 @@ public class Controller implements Initializable {
     }
 
     private int insertUser(String fname, String lname, String email) {
-        final Session session = Main.getSession();
+        Session session = Main.getSession();
         Transaction tx = null;
         int userIdSaved = 0;
         try {
@@ -86,6 +97,23 @@ public class Controller implements Initializable {
 
         return userIdSaved;
 
+    }
+
+    private List listUsers() {
+        Session session = Main.getSession();
+        Transaction tx;
+        List users = new ArrayList();
+        try {
+            tx = session.beginTransaction();
+            users = session.createQuery("From UsersEntity").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return users;
     }
 
     private void unlimitedrunable() {
