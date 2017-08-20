@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT ,
+  first_name VARCHAR(50) NOT NULL UNIQUE,
+  last_name VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL);
