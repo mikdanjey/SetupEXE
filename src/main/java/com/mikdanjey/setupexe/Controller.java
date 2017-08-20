@@ -6,8 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.metamodel.EntityType;
@@ -43,7 +45,10 @@ public class Controller implements Initializable {
 
     @FXML
     private void submit_action() {
+        insertUser(first_name_textbox.getText(), last_name_textbox.getText(), email_textbox.getText());
+    }
 
+    private void listAll() {
         final Session session = Main.getSession();
         try {
             System.out.println("querying all the managed entities...");
@@ -59,6 +64,28 @@ public class Controller implements Initializable {
         } finally {
             session.close();
         }
+    }
+
+    private int insertUser(String fname, String lname, String email) {
+        final Session session = Main.getSession();
+        Transaction tx = null;
+        int userIdSaved = 0;
+        try {
+            tx = session.beginTransaction();
+            UsersEntity u = new UsersEntity(fname, lname, email);
+            userIdSaved = (int) session.save(u);
+            tx.commit();
+
+        } catch (HibernateException ex) {
+            if (tx != null)
+                tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return userIdSaved;
+
     }
 
     private void unlimitedrunable() {

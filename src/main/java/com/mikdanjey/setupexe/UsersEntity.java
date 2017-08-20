@@ -13,6 +13,15 @@ public class UsersEntity {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+    public UsersEntity(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public UsersEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {
