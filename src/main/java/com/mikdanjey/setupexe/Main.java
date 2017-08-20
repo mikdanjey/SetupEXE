@@ -33,7 +33,7 @@ public class Main extends Application {
     private static final String connection_username_key = "hibernate.connection.username";
     private static final String connection_password_key = "hibernate.connection.password";
 
-    private static String connection_driver_class_value = "com.mysql.jdbc.Driver";
+    private static String connection_driver_class_value = "com.mysql.cj.jdbc.Driver";
 
     private static String connection_host;
     private static String connection_post;
