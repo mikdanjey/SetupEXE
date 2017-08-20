@@ -25,46 +25,7 @@
     </dependencies>
 
     <build>
-
         <plugins>
-
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.6.0</version>
-                <configuration>
-                    <mainClass>com.mikdanjey.setupexe.Main</mainClass>
-                    <jfxAppOutputDir>${project.build.directory}/jfx/app</jfxAppOutputDir>
-                    <jfxMainAppJarName>Default: ${project.build.finalName}-jfx.jar</jfxMainAppJarName>
-                    <deployDir>${project.basedir}/src/main/deploy</deployDir>
-                    <vendor>${project.organization.name}</vendor>
-                    <nativeOutputDir>${project.build.directory}/jfx/native</nativeOutputDir>
-                    <bundler>ALL</bundler>
-                    <nativeReleaseVersion>1.1</nativeReleaseVersion>
-                    <needShortcut>true</needShortcut>
-                    <needMenu>true</needMenu>
-                    <appName>${project.build.finalName}</appName>
-                    <additionalAppResources>README.md</additionalAppResources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <!-- required before build-native -->
-                        <id>create-jfxjar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build-jar</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>create-native</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build-native</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
