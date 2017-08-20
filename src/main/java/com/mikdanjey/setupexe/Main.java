@@ -68,24 +68,20 @@ public class Main extends Application {
         try {
             fileReader = new FileReader(PropertiesFile);
         } catch (FileNotFoundException e) {
-
+            configSet();
         }
-        if (fileReader != null) {
-            try {
-                properties.load(fileReader);
-                connection_host = properties.getProperty(PropertiesSQLHost, "localhost");
-                connection_post = properties.getProperty(PropertiesSQLPort, "3306");
-                connection_database = properties.getProperty(PropertiesSQLDatabase, "test");
+        try {
+            properties.load(fileReader);
+            connection_host = properties.getProperty(PropertiesSQLHost, "localhost");
+            connection_post = properties.getProperty(PropertiesSQLPort, "3306");
+            connection_database = properties.getProperty(PropertiesSQLDatabase, "test");
 
-                connection_url_value = "jdbc:mysql://" + connection_host + ":" + connection_post + "/" + connection_database;
+            connection_url_value = "jdbc:mysql://" + connection_host + ":" + connection_post + "/" + connection_database;
 
-                connection_username_value = properties.getProperty(PropertiesSQLUserName, "root");
-                connection_password_value = properties.getProperty(PropertiesSQLPassword, "root");
+            connection_username_value = properties.getProperty(PropertiesSQLUserName, "root");
+            connection_password_value = properties.getProperty(PropertiesSQLPassword, "root");
 
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }else{
+        } catch (IOException e) {
             configSet();
         }
     }
@@ -99,7 +95,8 @@ public class Main extends Application {
 
         try {
             properties.store(new FileWriter(PropertiesFile), "Setup EXE Info");
-        } catch (IOException e) {
+            configLoad();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

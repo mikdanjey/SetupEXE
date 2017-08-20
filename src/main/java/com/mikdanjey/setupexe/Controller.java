@@ -3,9 +3,9 @@ package com.mikdanjey.setupexe;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import org.hibernate.Metamodel;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -42,7 +42,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void submit_action(){
+    private void submit_action() {
 
         final Session session = Main.getSession();
         try {
