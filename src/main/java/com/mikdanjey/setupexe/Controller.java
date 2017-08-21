@@ -67,16 +67,15 @@ public class Controller implements Initializable {
         userTable.setItems(getUser());
         userTable.setItems(usersEntityObservableList);
 
+        submit_button.autosize();
+
         unlimitedrunable();
     }
 
     private ObservableList<UsersEntity> getUser() {
         usersEntityObservableList = FXCollections.observableArrayList();
 
-        List<UsersEntity> users = listUsers();
-        for (UsersEntity u : users) {
-            usersEntityObservableList.add(u);
-        }
+        usersEntityObservableList.addAll(listUsers());
         return usersEntityObservableList;
     }
 
@@ -89,19 +88,10 @@ public class Controller implements Initializable {
         usersEntity.setEmail(email_textbox.getText());
         String message = UsersModel.create(usersEntity);
 
-        List<UsersEntity> users = listUsers();
-        for (UsersEntity u : users) {
-            System.out.print(u.getId() + " ");
-            System.out.print(u.getFirstName() + " ");
-            System.out.print(u.getLastName() + " ");
-            System.out.print(u.getEmail() + " ");
-            System.out.println();
-        }
     }
 
     private void listAll() {
-        final Session session = Main.getSession();
-        try {
+        try (Session session = Main.getSession()) {
             System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
             for (EntityType<?> entityType : metamodel.getEntities()) {
@@ -112,8 +102,6 @@ public class Controller implements Initializable {
                     System.out.println("  " + o);
                 }
             }
-        } finally {
-            session.close();
         }
     }
 
@@ -134,19 +122,7 @@ public class Controller implements Initializable {
     private void unlimitedrunable() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                time_label.setText("Thread: " + String.valueOf(i++));
-
-
-                            }
-                        });
-                    }
-                },
+                () -> Platform.runLater(() -> time_label.setText("Thread: " + String.valueOf(i++))),
                 1,
                 1,
                 TimeUnit.SECONDS);
@@ -162,27 +138,17 @@ public class Controller implements Initializable {
                     public void run() {
                         counter++;
                         if (counter <= 100) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    time_label.setText(
-                                            "isFxApplicationThread: "
-                                                    + Platform.isFxApplicationThread() + "\n"
-                                                    + "Counting: "
-                                                    + String.valueOf(counter));
-                                }
-                            });
+                            Platform.runLater(() -> time_label.setText(
+                                    "isFxApplicationThread: "
+                                            + Platform.isFxApplicationThread() + "\n"
+                                            + "Counting: "
+                                            + String.valueOf(counter)));
                         } else {
                             scheduler.shutdown();
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    time_label.setText(
-                                            "isFxApplicationThread: "
-                                                    + Platform.isFxApplicationThread() + "\n"
-                                                    + "-Finished-");
-                                }
-                            });
+                            Platform.runLater(() -> time_label.setText(
+                                    "isFxApplicationThread: "
+                                            + Platform.isFxApplicationThread() + "\n"
+                                            + "-Finished-"));
                         }
                     }
                 },

@@ -86,14 +86,7 @@ public class UsersEntity {
 
         UsersEntity that = (UsersEntity) o;
 
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-
-        return true;
+        return id == that.id && (firstName != null ? firstName.equals(that.firstName) : that.firstName == null) && (lastName != null ? lastName.equals(that.lastName) : that.lastName == null) && (email != null ? email.equals(that.email) : that.email == null) && (createdAt != null ? createdAt.equals(that.createdAt) : that.createdAt == null) && (updatedAt != null ? updatedAt.equals(that.updatedAt) : that.updatedAt == null);
     }
 
     @Override
