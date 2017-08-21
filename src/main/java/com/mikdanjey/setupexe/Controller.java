@@ -8,12 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.hibernate.HibernateException;
-import org.hibernate.Metamodel;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-import javax.persistence.metamodel.EntityType;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,27 +49,23 @@ public class Controller implements Initializable {
 
     private int i = 0;
 
-    private ObservableList<UsersEntity> usersEntityObservableList;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
-
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
 
         userTable.setEditable(true);
         userTable.setItems(getUser());
-        userTable.setItems(usersEntityObservableList);
 
         submit_button.autosize();
 
-        unlimitedrunable();
+        backgroundDataSearch();
     }
 
     private ObservableList<UsersEntity> getUser() {
-        usersEntityObservableList = FXCollections.observableArrayList();
+        ObservableList<UsersEntity> usersEntityObservableList = FXCollections.observableArrayList();
 
         usersEntityObservableList.addAll(listUsers());
         return usersEntityObservableList;
@@ -90,28 +82,10 @@ public class Controller implements Initializable {
 
     }
 
-    private void listAll() {
-        try (Session session = Main.getSession()) {
-            System.out.println("querying all the managed entities...");
-            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-            for (EntityType<?> entityType : metamodel.getEntities()) {
-                final String entityName = entityType.getName();
-                final Query query = session.createQuery("from " + entityName);
-                System.out.println("executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-            }
-        }
-    }
-
-    private List listUsers() {
-        Transaction tx;
+    private List<UsersEntity> listUsers() {
         List users = new ArrayList<>();
         try (Session session = Main.getSession()) {
-            tx = session.beginTransaction();
             users = session.createQuery("From UsersEntity").list();
-            tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -119,39 +93,10 @@ public class Controller implements Initializable {
         return users;
     }
 
-    private void unlimitedrunable() {
+    private void backgroundDataSearch() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(
                 () -> Platform.runLater(() -> time_label.setText("Thread: " + String.valueOf(i++))),
-                1,
-                1,
-                TimeUnit.SECONDS);
-    }
-
-    private void startScheduledExecutorService() {
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(
-                new Runnable() {
-                    int counter = 0;
-
-                    @Override
-                    public void run() {
-                        counter++;
-                        if (counter <= 100) {
-                            Platform.runLater(() -> time_label.setText(
-                                    "isFxApplicationThread: "
-                                            + Platform.isFxApplicationThread() + "\n"
-                                            + "Counting: "
-                                            + String.valueOf(counter)));
-                        } else {
-                            scheduler.shutdown();
-                            Platform.runLater(() -> time_label.setText(
-                                    "isFxApplicationThread: "
-                                            + Platform.isFxApplicationThread() + "\n"
-                                            + "-Finished-"));
-                        }
-                    }
-                },
                 1,
                 1,
                 TimeUnit.SECONDS);
