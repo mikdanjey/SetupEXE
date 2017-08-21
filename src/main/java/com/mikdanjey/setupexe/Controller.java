@@ -87,7 +87,7 @@ public class Controller implements Initializable {
         usersEntity.setFirstName(first_name_textbox.getText());
         usersEntity.setLastName(last_name_textbox.getText());
         usersEntity.setEmail(email_textbox.getText());
-        UsersModel.create(usersEntity);
+        String message = UsersModel.create(usersEntity);
 
         List<UsersEntity> users = listUsers();
         for (UsersEntity u : users) {

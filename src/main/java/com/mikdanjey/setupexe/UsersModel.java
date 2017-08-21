@@ -14,21 +14,20 @@ import java.util.Set;
 
 class UsersModel {
 
-    private static Map<String, Object> reponseMessage;
-
     private static Map<String, Object> validate(UsersEntity usersEntity) {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<UsersEntity>> constraintViolations = validator.validate(usersEntity);
 
+        Map<String, Object> reponseMessage;
         if (!constraintViolations.isEmpty()) {
-            String error = "";
+            StringBuilder error = new StringBuilder();
             for (ConstraintViolation<UsersEntity> constraintViolation : constraintViolations) {
-                error += constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage() + "\n";
+                error.append(constraintViolation.getPropertyPath()).append(" ").append(constraintViolation.getMessage()).append("\n");
             }
             reponseMessage = new HashMap<>();
             reponseMessage.put("status", false);
-            reponseMessage.put("message", error);
+            reponseMessage.put("message", error.toString());
         } else {
             reponseMessage = new HashMap<>();
             reponseMessage.put("status", true);
@@ -37,26 +36,24 @@ class UsersModel {
     }
 
     static String create(UsersEntity usersEntity) {
-        Session session = Main.getSession();
         Transaction transaction = null;
-        try {
+        String reponseMessage = null;
+        try (Session session = Main.getSession()) {
             transaction = session.beginTransaction();
-            Map<String, Object> reponseMessage = validate(usersEntity);
-            if (Boolean.parseBoolean(String.valueOf(reponseMessage.get("status")))){
+            Map<String, Object> responseMessage = validate(usersEntity);
+            if (Boolean.parseBoolean(String.valueOf(responseMessage.get("status")))) {
                 session.save(usersEntity);
                 transaction.commit();
-                System.out.println("User Saved");
-            }else {
-                System.out.println(reponseMessage.get("message"));
+                reponseMessage = "User Saved";
+            } else {
+                reponseMessage = (String) responseMessage.get("message");
             }
 
         } catch (HibernateException ex) {
             if (transaction != null)
                 transaction.rollback();
             ex.printStackTrace();
-        } finally {
-            session.close();
         }
-        return "";
+        return reponseMessage;
     }
 }
