@@ -1,11 +1,12 @@
 package com.mikdanjey.setupexe;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
 import org.hibernate.Session;
@@ -27,6 +28,18 @@ public class Controller implements Initializable {
     private Label time_label;
 
     @FXML
+    private TableView<UsersEntity> userTable;
+
+    @FXML
+    private TableColumn<UsersEntity, String> firstNameColumn;
+
+    @FXML
+    private TableColumn<UsersEntity, String> lastNameColumn;
+
+    @FXML
+    private TableColumn<UsersEntity, String> emailColumn;
+
+    @FXML
     private TextField first_name_textbox;
 
     @FXML
@@ -40,9 +53,31 @@ public class Controller implements Initializable {
 
     private int i = 0;
 
+    private ObservableList<UsersEntity> usersEntityObservableList;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
+
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
+
+        userTable.setEditable(true);
+        userTable.setItems(getUser());
+        userTable.setItems(usersEntityObservableList);
+
         unlimitedrunable();
+    }
+
+    private ObservableList<UsersEntity> getUser() {
+        usersEntityObservableList = FXCollections.observableArrayList();
+
+        List<UsersEntity> users = listUsers();
+        for (UsersEntity u : users) {
+            usersEntityObservableList.add(u);
+        }
+        return usersEntityObservableList;
     }
 
     @FXML
@@ -83,17 +118,14 @@ public class Controller implements Initializable {
     }
 
     private List listUsers() {
-        Session session = Main.getSession();
         Transaction tx;
-        List users = new ArrayList();
-        try {
+        List users = new ArrayList<>();
+        try (Session session = Main.getSession()) {
             tx = session.beginTransaction();
             users = session.createQuery("From UsersEntity").list();
             tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
-        } finally {
-            session.close();
         }
 
         return users;
@@ -109,6 +141,8 @@ public class Controller implements Initializable {
                             @Override
                             public void run() {
                                 time_label.setText("Thread: " + String.valueOf(i++));
+
+
                             }
                         });
                     }
