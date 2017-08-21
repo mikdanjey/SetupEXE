@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -57,9 +58,10 @@ public class Controller implements Initializable {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
 
         userTable.setEditable(true);
-        userTable.setItems(getUser());
 
         submit_button.autosize();
+
+        userTable.setItems(getUser());
 
         backgroundDataSearch();
     }
@@ -84,8 +86,12 @@ public class Controller implements Initializable {
 
     private List<UsersEntity> listUsers() {
         List users = new ArrayList<>();
+        Transaction tx;
         try (Session session = Main.getSession()) {
+            tx = session.beginTransaction();
             users = session.createQuery("From UsersEntity").list();
+            tx.commit();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -96,9 +102,9 @@ public class Controller implements Initializable {
     private void backgroundDataSearch() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(
-                () -> Platform.runLater(() -> time_label.setText("Thread: " + String.valueOf(i++))),
-                1,
-                1,
+                () -> Platform.runLater(() -> System.out.println("ok") ),
+                0,
+                5,
                 TimeUnit.SECONDS);
     }
 }
