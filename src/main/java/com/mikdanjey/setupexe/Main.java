@@ -29,7 +29,7 @@ public class Main extends Application {
     private static final String PropertiesSQLDatabase = "Database";
 
     private static final String connection_driver_class_key = "hibernate.connection.driver_class";
-    private static final String connection_dialect_key = "org.hibernate.dialect.MySQL5Dialect";
+    private static final String connection_dialect_key = "hibernate.dialect";
     private static final String connection_url_key = "hibernate.connection.url";
     private static final String connection_username_key = "hibernate.connection.username";
     private static final String connection_password_key = "hibernate.connection.password";

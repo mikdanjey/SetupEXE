@@ -82,6 +82,15 @@ public class Controller implements Initializable {
         usersEntity.setEmail(email_textbox.getText());
         String message = UsersModel.create(usersEntity);
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+
+        userTable.setItems(getUser());
+
     }
 
     private List<UsersEntity> listUsers() {
