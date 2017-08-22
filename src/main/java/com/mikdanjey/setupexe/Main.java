@@ -71,13 +71,14 @@ public class Main extends Application {
         try {
             fileReader = new FileReader(PropertiesFile);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             configSet();
         }
         try {
             properties.load(fileReader);
             connection_host = properties.getProperty(PropertiesSQLHost, "localhost");
             connection_post = properties.getProperty(PropertiesSQLPort, "3306");
-            connection_database = properties.getProperty(PropertiesSQLDatabase, "test");
+            connection_database = properties.getProperty(PropertiesSQLDatabase, "sample");
 
             connection_url_value = "jdbc:mysql://" + connection_host + ":" + connection_post + "/" + connection_database;
 
@@ -85,6 +86,7 @@ public class Main extends Application {
             connection_password_value = properties.getProperty(PropertiesSQLPassword, "root");
 
         } catch (IOException e) {
+            e.printStackTrace();
             configSet();
         }
     }
@@ -94,7 +96,7 @@ public class Main extends Application {
         properties.setProperty(PropertiesSQLPort, "3306");
         properties.setProperty(PropertiesSQLUserName, "root");
         properties.setProperty(PropertiesSQLPassword, "root");
-        properties.setProperty(PropertiesSQLDatabase, "test");
+        properties.setProperty(PropertiesSQLDatabase, "sample");
 
         try {
             properties.store(new FileWriter(PropertiesFile), "Setup EXE Info");
@@ -104,7 +106,7 @@ public class Main extends Application {
         }
     }
 
-    public static Session getSession() throws HibernateException {
+    static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
     }
 

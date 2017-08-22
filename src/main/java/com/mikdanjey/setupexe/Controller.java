@@ -88,9 +88,6 @@ public class Controller implements Initializable {
         alert.setContentText(message);
 
         alert.showAndWait();
-
-        userTable.setItems(getUser());
-
     }
 
     private List<UsersEntity> listUsers() {
@@ -111,9 +108,9 @@ public class Controller implements Initializable {
     private void backgroundDataSearch() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(
-                () -> Platform.runLater(() -> System.out.println("ok") ),
+                () -> Platform.runLater(() ->  userTable.setItems(getUser()) ),
                 0,
-                5,
+                3,
                 TimeUnit.SECONDS);
     }
 }
