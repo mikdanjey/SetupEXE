@@ -3,16 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mikdanjey.setupexe.Controller">
-    <bottom>
-        <Label fx:id="time_label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" textFill="#eb0e0e" BorderPane.alignment="CENTER">
-            <font>
-                <Font name="Bodoni MT" size="72.0" />
-            </font>
-        </Label>
-    </bottom>
-    <left>
+   <center>
         <GridPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="88.0" />
@@ -61,17 +53,5 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </GridPane>
-    </left>
-    <right>
-        <TableView fx:id="userTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
-                <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
-                <TableColumn fx:id="emailColumn" prefWidth="75.0" text="Email" />
-            </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-        </TableView>
-    </right>
+   </center>
 </BorderPane>
