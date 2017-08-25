@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames = {"email"})})
 public class UsersEntity {
     private int id;
     private String firstName;
